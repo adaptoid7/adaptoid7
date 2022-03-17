@@ -1,0 +1,87 @@
+<template>
+
+    <lightning-card title="Candidate Application Form" icon-name="standard:record">
+
+        <div class="slds-m-around_medium stepOne">
+            <div>
+                <lightning-record-edit-form object-api-name="Applicant__c" record-id={appId} onsuccess={handleSuccess} onerror={handleError}>
+                    <h1>Personal Information</h1><br>
+                    <lightning-messages></lightning-messages>
+                    <lightning-input-field field-name="First_Name__c" required></lightning-input-field>
+                    <lightning-input-field field-name="Last_Name__c" required></lightning-input-field>
+                    <lightning-input-field field-name="Gender__c" required></lightning-input-field>
+                    <lightning-input-field field-name="Email__c" onkeyup={handleKey} required></lightning-input-field>
+                    <lightning-input-field field-name="Mobile_Number__c" onkeyup={handleKey}  required></lightning-input-field>
+                    <button class="slds-button slds-button_success slds-m-bottom_medium" type="submit" >Save</button><br>       
+            </lightning-record-edit-form>
+            </div>
+            <div class="slds-m-top_medium">
+                <lightning-button label="Next" icon-name="utility:chevronright" onclick={gotostepTwo}></lightning-button>
+            </div>
+    
+        </div>
+        
+       
+
+        <div class="slds-m-around_medium stepTwo slds-hide">
+            <div>
+                <h1>Education Details</h1><br>
+                <lightning-record-edit-form object-api-name="Education_Detail__c" onsuccess={handleSuccessEvent}>
+                    <lightning-input-field field-name="Applicant__c" value={appId} class="slds-hide"></lightning-input-field>
+                    <lightning-input-field field-name="Degree__c" class="reset" required></lightning-input-field>
+                    <lightning-input-field field-name="Institution__c" class="reset" required></lightning-input-field>
+                    <lightning-input-field field-name="Start_Date__c" class="reset" required></lightning-input-field>
+                    <lightning-input-field field-name="End_Date__c" class="reset"></lightning-input-field>         
+                    <button class="slds-button slds-button_success slds-m-bottom_small" type="submit">Save</button><br>
+                </lightning-record-edit-form>
+            </div>
+            <div class="slds-m-top_small slds-m-bottom_small">
+                <lightning-button label="Previous"  icon-name="utility:chevronleft" onclick={gotostepOne}></lightning-button>
+                <div class="slds-float_right">
+                    <lightning-button label="Next"  icon-name="utility:chevronright" onclick={gotostepThree}></lightning-button>
+                </div>
+            </div>  
+           
+            <template if:true={education}>         
+                <lightning-datatable key-field="Id"  data = {education}
+                                show-row-number-column hide-checkbox-column
+                                 onsave={handleSave}
+                                draft-values={draftValues}
+                                columns = {columns} onrowaction = {handleRowAction}>      
+                </lightning-datatable>       
+            </template>                    
+        </div>
+
+        <div class="slds-m-around_medium stepThree slds-hide">
+            <h1>Experience Details</h1><br>
+            <lightning-record-edit-form object-api-name="Experience_Detail__c" onsuccess={handlesuccessExp}>
+                <lightning-input-field field-name="Applicant__c" value={appId} class="slds-hide"></lightning-input-field>
+                <lightning-input-field field-name="Job_Type__c" class="reset-Exp" required></lightning-input-field>
+                <lightning-input-field field-name="Company_Name__c" class="reset-Exp" required></lightning-input-field>
+                <lightning-input-field field-name="Start_Date__c"  class="reset-Exp" required></lightning-input-field>
+                <lightning-input-field field-name="End_Date__c"  class="reset-Exp"></lightning-input-field>
+                <button class="slds-button slds-button_success slds-m-bottom_medium" type="submit">Save</button><br>
+            </lightning-record-edit-form>
+            <div class="slds-m-top_small slds-m-bottom_medium slds-m-right_medium">
+                <lightning-button label="Previous"  icon-name="utility:chevronleft" onclick={gobacktostepTwo}></lightning-button>              
+            </div>
+           <div>
+                <template if:true={experience}>
+                    <lightning-datatable class="datatable" key-field="Id" data={experience} show-row-number-column hide-checkbox-column 
+                    columns={column}
+                    onsave={handleSaveExp}
+                    draft-values={draftValues}
+                    onrowaction = {handleRowActionExp}
+                    >
+                    </lightning-datatable>   
+                </template>
+            </div>
+            <div>
+                <button class="slds-button slds-button_destructive slds-m-top_large slds-m-bottom_small slds-float_right" type="submit" onclick={exitForm}>Exit</button>
+            </div>
+        </div>    
+            <p slot="footer">Please enter all Details</p> 
+       
+    </lightning-card>
+
+</template>

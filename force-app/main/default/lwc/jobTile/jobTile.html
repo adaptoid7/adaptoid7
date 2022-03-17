@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title={job.Job_Position__c} class="job-tile">
+        <div slot="actions">
+            <lightning-button-icon icon-name="utility:search" icon-class="bear-tile-button" variant="bare"
+                alternative-text="Open record" onclick={handleOpenRecordClick}>
+            </lightning-button-icon>
+        </div>
+        <div class="slds-var-p-horizontal_small job-tile-body">
+            <div class="slds-media">    
+                <div class="slds-media__body">
+                    <p class="slds-var-m-bottom_xx-small">Company Name: {job.Company_Name__c}</p>
+                    <p class="slds-var-m-bottom_xx-small">Job Type: {job.Job_Type__c} </p>
+                    <p class="slds-var-m-bottom_xx-small">Vaccancy: {job.Number_of_Vacc__c} </p>
+                </div>
+            </div>
+        </div>
+        
+    </lightning-card>
+
+</template>
